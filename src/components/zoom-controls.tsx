@@ -4,7 +4,7 @@ import { ComponentProps } from "react";
 import { Button } from "./ui/button";
 import { cn } from "@/lib/utils";
 import { MinusIcon, PlusIcon } from "lucide-react";
-import { useScale, useZoomControls } from "@/lib/state/context";
+import { useZoomControls } from "@/lib/state/context";
 
 function ZoomButton({
   className,

@@ -1,4 +1,4 @@
-import { image, project } from "@/lib/utils";
+import { project } from "@/lib/utils";
 
 const name = "where-clouds-meet";
 

@@ -37,13 +37,6 @@ export default async function Home() {
   );
 }
 
-enum Side {
-  TOP = "top",
-  BOTTOM = "bottom",
-  LEFT = "left",
-  RIGHT = "right",
-}
-
 function Items({ images }: { images: Image[] }) {
   return (
     <>

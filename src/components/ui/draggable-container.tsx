@@ -1,6 +1,12 @@
 "use client";
 
-import { ReactNode, useLayoutEffect, useRef, useState } from "react";
+import {
+  ReactNode,
+  useLayoutEffect,
+  useRef,
+  useState,
+  useCallback,
+} from "react";
 import { motion, useMotionValue } from "motion/react";
 import { useScale } from "@/lib/state/context";
 
@@ -20,7 +26,7 @@ export function DraggableContainer({ children }: { children: ReactNode }) {
   const y = useMotionValue(0);
   const hasCenteredRef = useRef(false);
 
-  const computeConstraints = () => {
+  const computeConstraints = useCallback(() => {
     const el = surfaceRef.current;
     if (!el) return;
 
@@ -47,7 +53,7 @@ export function DraggableContainer({ children }: { children: ReactNode }) {
       x.set(clamp(x.get(), left, right));
       y.set(clamp(y.get(), top, bottom));
     }
-  };
+  }, [x, y]);
 
   useLayoutEffect(() => {
     computeConstraints();
@@ -67,7 +73,7 @@ export function DraggableContainer({ children }: { children: ReactNode }) {
       window.removeEventListener("orientationchange", onResize);
       ro?.disconnect();
     };
-  }, []);
+  }, [computeConstraints]);
 
   return (
     <div

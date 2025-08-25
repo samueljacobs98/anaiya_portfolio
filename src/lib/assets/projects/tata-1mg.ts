@@ -81,10 +81,19 @@ export const tata1mg = project(name, [
       dropShadow: true,
     }
   ),
-  image("person red", name, `/images/${name}/person-red.png`, "Person Red", {
-    width: 1000,
-    height: 1000,
-  }),
+  image(
+    "person red",
+    name,
+    `/images/${name}/person-red.png`,
+    "Person Red",
+    {
+      width: 1000,
+      height: 1000,
+    },
+    {
+      dropShadow: true,
+    }
+  ),
   image(
     "person turquoise",
     name,

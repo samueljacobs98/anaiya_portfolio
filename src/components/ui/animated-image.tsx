@@ -145,7 +145,7 @@ const AnimatedImage = forwardRef<
       <motion.div
         ref={(node) => {
           containerRef.current = node;
-          if (typeof ref === "function") ref(node as any);
+          if (typeof ref === "function") ref(node);
           else if (ref)
             (ref as React.MutableRefObject<HTMLDivElement | null>).current =
               node;
