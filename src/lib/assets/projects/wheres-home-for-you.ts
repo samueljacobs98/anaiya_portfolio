@@ -1,11 +1,11 @@
 import { project } from "@/lib/utils";
 
-const name = "wheres-home-for-you";
+const path = "/images/wheres-home-for-you";
 
-export const wheresHomeForYou = project(name, [
+export const wheresHomeForYou = project("Wheres Home For You", (projectId) => [
   //   image(
   //     "wheres-home-for-you",
-  //     `/images/${name}/wheres-home-for-you.jpg`,
+  //     `${path}/wheres-home-for-you.jpg`,
   //     "Wheres Home For You",
   //     {
   //       width: 1000,

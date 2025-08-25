@@ -1,9 +1,17 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
-import type { Image, Project } from "./types";
+import { Image } from "./domain/image";
+import { Project } from "./domain/project";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
+}
+
+function createProjectId(name: string): string {
+  return name
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
 }
 
 export function generateGridItems(
@@ -120,6 +128,7 @@ function getRandomImage(
 }
 
 export const image = (
+  id: string,
   name: string,
   projectId: string,
   path: string,
@@ -139,8 +148,8 @@ export const image = (
     priority: false,
   }
 ): Image => {
-  return {
-    id: `image-${name}`,
+  return new Image(
+    id,
     projectId,
     name,
     path,
@@ -148,17 +157,21 @@ export const image = (
     width,
     height,
     side,
-    tags: new Set<string>(),
+    new Set<string>(),
     dropShadow,
-    priority,
-  };
+    priority
+  );
 };
 
-export const project = (name: string, images: Image[] = []): Project => {
-  return {
-    id: `project-${name}`,
+export const project = (
+  name: string,
+  imagesFactory: (projectId: string) => Image[]
+): Project => {
+  const projectId = createProjectId(name);
+  return new Project(
+    projectId,
     name,
-    images,
-    tags: new Set<string>(),
-  };
+    new Set<string>(),
+    imagesFactory(projectId)
+  );
 };

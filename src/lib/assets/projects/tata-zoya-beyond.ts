@@ -1,12 +1,13 @@
 import { image, project } from "@/lib/utils";
 
-const name = "tata-zoya-beyond";
+const path = "/images/tata-zoya-beyond";
 
-export const tataZoyaBeyond = project(name, [
+export const tataZoyaBeyond = project("Tata Zoya Beyond", (projectId) => [
   image(
     "Brand Campaign",
-    name,
-    `/images/${name}/brand-campaign.png`,
+    "Brand Campaign",
+    projectId,
+    `${path}/brand-campaign.png`,
     "Tata Zoya Beyond Brand Campaign",
     {
       width: 1000,

@@ -1,12 +1,13 @@
 import { image, project } from "@/lib/utils";
 
-const name = "indian-gifts-portal";
+const path = "/images/indian-gifts-portal";
 
-export const indianGiftsPortal = project(name, [
+export const indianGiftsPortal = project("Indian Gifts Portal", (projectId) => [
   image(
     "igp-logo",
-    name,
-    `/images/${name}/igp-logo.png`,
+    "Indian Gifts Portal",
+    projectId,
+    `${path}/igp-logo.png`,
     "Indian Gifts Portal Logo",
     {
       width: 1000,

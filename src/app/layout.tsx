@@ -3,8 +3,7 @@ import { Questrial, Bagel_Fat_One } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/header";
 import { ScaleProvider } from "@/lib/state/context";
-import { ZoomControls } from "@/components/zoom-controls";
-import { MoveIcon } from "lucide-react";
+import { NuqsAdapter } from "nuqs/adapters/next/app";
 
 const questrial = Questrial({
   variable: "--font-questrial",
@@ -36,22 +35,17 @@ export default function RootLayout({
           backgroundColor: "#F9F8EF",
         }}
       >
-        <ScaleProvider
-          initialScale={0.5}
-          scaleStep={0.1}
-          scaleMin={0.3}
-          scaleMax={1}
-        >
-          <Header />
-          {children}
-          <div className="fixed bottom-4 right-4 flex gap-4">
-            <div className="flex items-center gap-2 text-muted-foreground">
-              <MoveIcon />
-              <p className="text-sm">Drag to explore</p>
-            </div>
-            <ZoomControls />
-          </div>
-        </ScaleProvider>
+        <NuqsAdapter>
+          <ScaleProvider
+            initialScale={0.5}
+            scaleStep={0.1}
+            scaleMin={0.3}
+            scaleMax={1}
+          >
+            <Header />
+            {children}
+          </ScaleProvider>
+        </NuqsAdapter>
       </body>
     </html>
   );
