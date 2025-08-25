@@ -10,6 +10,8 @@ import {
 import { getProjectById } from "@/lib/assets/projects";
 import { useEffect, useState } from "react";
 import { Project } from "@/lib/domain/project";
+import { Logo } from "./logo";
+import { motion } from "motion/react";
 
 export function ProjectSheet() {
   const [projectId, setProject] = useQueryState("project");
@@ -63,11 +65,27 @@ function Sheet({
       {project && (
         <SheetContent side="left" className="w-[70vw] !max-w-[1000px]">
           <SheetHeader>
-            <h2 className="lowercase font-bold text-4xl font-playful text-[#95d7ef]">
-              Anaiya
-            </h2>
-            <SheetTitle>{project?.name}</SheetTitle>
+            <Logo as="h2" />
           </SheetHeader>
+          <div className="p-4">
+            <SheetTitle className="text-6xl font-bold font-playful">
+              {project?.name.split("").map((char, index) => (
+                <motion.span
+                  key={index}
+                  initial={{ opacity: 0, y: 32 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{
+                    duration: 0.5,
+                    delay: 0.8 + index * 0.05,
+                    ease: "easeInOut",
+                  }}
+                  style={{ display: "inline-block" }}
+                >
+                  {char === " " ? "\u00A0" : char}
+                </motion.span>
+              ))}
+            </SheetTitle>
+          </div>
         </SheetContent>
       )}
     </_Sheet>
