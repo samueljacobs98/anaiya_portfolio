@@ -5,46 +5,34 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { projects } from "@/lib/assets/projects";
+import type { Image } from "@/lib/types";
+import { generateGridItems } from "@/lib/utils";
 
-export default function Home() {
+const COLUMNS = 14;
+
+const getStaticProps = async () => {
+  const gridItems = generateGridItems(projects, COLUMNS);
+
+  return {
+    props: {
+      gridItems,
+    },
+  };
+};
+
+export default async function Home() {
+  const {
+    props: { gridItems },
+  } = await getStaticProps();
+
   return (
-    <Layout columns={12}>
-      <Column offset={1}>
-        <Items />
-      </Column>
-      <Column>
-        <Items />
-      </Column>
-      <Column offset={3}>
-        <Items />
-      </Column>
-      <Column>
-        <Items />
-      </Column>
-      <Column offset={5}>
-        <Items />
-      </Column>
-      <Column>
-        <Items />
-      </Column>
-      <Column offset={2}>
-        <Items />
-      </Column>
-      <Column>
-        <Items />
-      </Column>
-      <Column offset={4}>
-        <Items />
-      </Column>
-      <Column>
-        <Items />
-      </Column>
-      <Column offset={4}>
-        <Items />
-      </Column>
-      <Column>
-        <Items />
-      </Column>
+    <Layout columns={COLUMNS}>
+      {gridItems.map((columnImages, index) => (
+        <Column key={index}>
+          <Items images={columnImages} />
+        </Column>
+      ))}
     </Layout>
   );
 }
@@ -159,15 +147,15 @@ const images = [
   },
 ];
 
-function Items() {
+function Items({ images }: { images: Image[] }) {
   return (
     <>
       {images.map((image, index) => (
-        <Tooltip key={image.src}>
+        <Tooltip key={image.id}>
           <TooltipTrigger>
             <AnimatedImage
               className="cursor-grab max-w-sm"
-              src={image.src}
+              src={image.path}
               alt={image.alt}
               width={image.width}
               height={image.height}
@@ -176,8 +164,8 @@ function Items() {
               animationDelay={0.3 * (2 % index)}
             />
           </TooltipTrigger>
-          <TooltipContent sideOffset={10} side={image.side}>
-            <p>{image.project}</p>
+          <TooltipContent sideOffset={10}>
+            <p>{image.projectId}</p>
           </TooltipContent>
         </Tooltip>
       ))}
