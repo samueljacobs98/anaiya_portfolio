@@ -63,7 +63,7 @@ function ZoomOutButton({
 
 export function ZoomControls() {
   return (
-    <div className="z-10 fixed flex gap-2 bottom-4 right-4">
+    <div className="flex gap-2">
       <ZoomOutButton />
       <ZoomInButton />
     </div>

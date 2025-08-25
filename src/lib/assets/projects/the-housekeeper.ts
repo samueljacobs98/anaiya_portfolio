@@ -44,4 +44,62 @@ export const theHousekeeper = project(name, [
     width: 1000,
     height: 1000,
   }),
+  image(
+    "inside-the-dollhouse",
+    name,
+    `/images/${name}/inside-the-dollhouse.png`,
+    "Inside the Dollhouse",
+    {
+      width: 1000,
+      height: 1000,
+    }
+  ),
+  image(
+    "instructions",
+    name,
+    `/images/${name}/instructions.png`,
+    "Instructions",
+    {
+      width: 1000,
+      height: 1000,
+    }
+  ),
+  image(
+    "laser-cuttings",
+    name,
+    `/images/${name}/laser-cuttings.png`,
+    "Laser Cuttings",
+    {
+      width: 1000,
+      height: 1000,
+    }
+  ),
+  image(
+    "mechanical-designs",
+    name,
+    `/images/${name}/mechanical-designs.png`,
+    "Mechanical Designs",
+    {
+      width: 1000,
+      height: 1000,
+    }
+  ),
+  image("mechanism", name, `/images/${name}/mechanism.png`, "Mechanism", {
+    width: 1000,
+    height: 1000,
+  }),
+  image(
+    "through-the-window",
+    name,
+    `/images/${name}/through-the-window.png`,
+    "Through the Window",
+    {
+      width: 1000,
+      height: 1000,
+    }
+  ),
+  image("workshops", name, `/images/${name}/workshops.png`, "Workshops", {
+    width: 1000,
+    height: 1000,
+  }),
 ]);

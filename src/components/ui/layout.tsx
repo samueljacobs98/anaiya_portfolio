@@ -2,20 +2,48 @@
 
 import { cn } from "@/lib/utils";
 import { DraggableContainer } from "./draggable-container";
+import { AnimatedImage } from "./animated-image";
+import { Tooltip, TooltipContent, TooltipTrigger } from "./tooltip";
+import type { Image } from "@/lib/types";
+
+function Item({ image, index }: { image: Image; index: number }) {
+  return (
+    <Tooltip key={image.id}>
+      <TooltipTrigger>
+        <AnimatedImage
+          className="cursor-grab max-w-sm"
+          src={image.path}
+          alt={image.alt}
+          width={image.width}
+          height={image.height}
+          dropShadow={image.dropShadow}
+          range={200}
+          animationDelay={0.3 * (2 % index)}
+          priority={image.priority}
+        />
+      </TooltipTrigger>
+      <TooltipContent sideOffset={10}>
+        <p>{image.projectId}</p>
+      </TooltipContent>
+    </Tooltip>
+  );
+}
 
 export function Column({
   className,
   offset,
-  children,
+  images,
 }: {
   className?: string;
   offset?: number;
-  children: React.ReactNode;
+  images: Image[];
 }) {
   return (
     <div className={cn("flex flex-col gap-y-[12rem]", className)}>
       {offset && <div style={{ height: `${offset}rem` }} />}
-      {children}
+      {images.map((image, index) => (
+        <Item key={image.id} image={image} index={index} />
+      ))}
     </div>
   );
 }
