@@ -95,23 +95,12 @@ export function DraggableContainer({ children }: { children: ReactNode }) {
           damping: 30,
           duration: 0.3,
         }}
-        style={{
-          transformOrigin: "center center",
-          position: "absolute",
-          inset: 0,
-          width: "100%",
-          height: "100%",
-        }}
       >
         <motion.div
           ref={surfaceRef}
           drag
           dragConstraints={constraints}
           dragElastic={0}
-          dragTransition={{
-            power: 0.3,
-            timeConstant: 200,
-          }}
           initial={false}
           style={{
             position: "absolute",

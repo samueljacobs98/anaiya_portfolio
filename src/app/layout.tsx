@@ -4,6 +4,7 @@ import "./globals.css";
 import { Header } from "@/components/header";
 import { ScaleProvider } from "@/lib/state/context";
 import { ZoomControls } from "@/components/zoom-controls";
+import { MoveIcon } from "lucide-react";
 
 const questrial = Questrial({
   variable: "--font-questrial",
@@ -43,7 +44,13 @@ export default function RootLayout({
         >
           <Header />
           {children}
-          <ZoomControls />
+          <div className="fixed bottom-4 right-4 flex gap-4">
+            <div className="flex items-center gap-2 text-muted-foreground">
+              <MoveIcon />
+              <p className="text-sm">Drag to explore</p>
+            </div>
+            <ZoomControls />
+          </div>
         </ScaleProvider>
       </body>
     </html>
