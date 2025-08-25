@@ -1,103 +1,186 @@
-import Image from "next/image";
+import { AnimatedImage } from "@/components/ui/animated-image";
+import { Layout, Column } from "@/components/ui/layout";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 export default function Home() {
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+    <Layout columns={12}>
+      <Column offset={1}>
+        <Items />
+      </Column>
+      <Column>
+        <Items />
+      </Column>
+      <Column offset={3}>
+        <Items />
+      </Column>
+      <Column>
+        <Items />
+      </Column>
+      <Column offset={5}>
+        <Items />
+      </Column>
+      <Column>
+        <Items />
+      </Column>
+      <Column offset={2}>
+        <Items />
+      </Column>
+      <Column>
+        <Items />
+      </Column>
+      <Column offset={4}>
+        <Items />
+      </Column>
+      <Column>
+        <Items />
+      </Column>
+      <Column offset={4}>
+        <Items />
+      </Column>
+      <Column>
+        <Items />
+      </Column>
+    </Layout>
+  );
+}
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
+enum Side {
+  TOP = "top",
+  BOTTOM = "bottom",
+  LEFT = "left",
+  RIGHT = "right",
+}
+
+const sides = Object.values(Side);
+
+const images = [
+  {
+    src: "/images/the-housekeeper/artist-and-art.png",
+    alt: "Artist and Art",
+    project: "the housekeeper",
+    width: 647,
+    height: 651,
+    side: sides[Math.floor(Math.random() * 4)],
+  },
+  {
+    src: "/images/love-is-a-path-of-least-resistance/love-is-a-path-of-least-resistance.png",
+    alt: "Love is a Path of Least Resistance",
+    project: "love is a path of least resistance",
+    width: 593,
+    height: 503,
+    side: sides[Math.floor(Math.random() * 4)],
+  },
+  {
+    src: "/images/what-is-your-spirit-animal/workshop.png",
+    alt: "What is Your Spirit Animal",
+    project: "what is your spirit animal",
+    width: 593,
+    height: 503,
+    side: sides[Math.floor(Math.random() * 4)],
+  },
+  {
+    src: "/images/where-clouds-meet/grief-e-journal.png",
+    alt: "Where Clouds Meet",
+    project: "where clouds meet",
+    width: 547,
+    height: 547,
+    side: sides[Math.floor(Math.random() * 4)],
+  },
+  {
+    src: "/images/wheres-home-for-you/exhibit.png",
+    alt: "Where's Home for You",
+    project: "where's home for you",
+    width: 475,
+    height: 546,
+    side: sides[Math.floor(Math.random() * 4)],
+  },
+  {
+    src: "/images/tata-1mg/girl-with-flower.png",
+    alt: "Girl with Flower",
+    project: "tata 1mg",
+    width: 494,
+    height: 626,
+    dropShadow: true,
+    side: sides[Math.floor(Math.random() * 4)],
+  },
+  {
+    src: "/images/niyo/niyo.png",
+    alt: "Niyo",
+    project: "niyo",
+    width: 579,
+    height: 446,
+    dropShadow: true,
+    side: sides[Math.floor(Math.random() * 4)],
+  },
+  {
+    src: "/images/tata-zoya-beyond/brand-campaign.png",
+    alt: "Beyond Brand Campaign",
+    project: "tata zoya beyond",
+    width: 453,
+    height: 528,
+    side: sides[Math.floor(Math.random() * 4)],
+  },
+  {
+    src: "/images/tata-zoya-my-embrace/my-embrace.png",
+    alt: "My Embrace",
+    project: "tata zoya my embrace",
+    width: 389,
+    height: 584,
+    side: sides[Math.floor(Math.random() * 4)],
+  },
+  {
+    src: "/images/tata-zoya-her-becoming/her-becoming.png",
+    alt: "Her Becoming",
+    project: "tata zoya her becoming",
+    width: 422,
+    height: 597,
+    side: sides[Math.floor(Math.random() * 4)],
+  },
+  {
+    src: "/images/purplle/purplle.png",
+    alt: "Purplle Logo",
+    project: "purplle",
+    width: 526,
+    height: 511,
+    side: sides[Math.floor(Math.random() * 4)],
+  },
+  {
+    src: "/images/indian-gifts-portal/igp-logo.png",
+    alt: "IGP Logo",
+    project: "indian gifts portal",
+    width: 447,
+    height: 525,
+    side: sides[Math.floor(Math.random() * 4)],
+  },
+];
+
+function Items() {
+  return (
+    <>
+      {images.map((image, index) => (
+        <Tooltip key={image.src}>
+          <TooltipTrigger>
+            <AnimatedImage
+              className="cursor-grab max-w-sm"
+              src={image.src}
+              alt={image.alt}
+              width={image.width}
+              height={image.height}
+              dropShadow={image.dropShadow}
+              range={200}
+              animationDelay={0.3 * (2 % index)}
             />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+          </TooltipTrigger>
+          <TooltipContent sideOffset={10} side={image.side}>
+            <p>{image.project}</p>
+          </TooltipContent>
+        </Tooltip>
+      ))}
+    </>
   );
 }
