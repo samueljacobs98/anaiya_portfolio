@@ -13,7 +13,7 @@ export function Column({
   children: React.ReactNode;
 }) {
   return (
-    <div className={cn("flex flex-col gap-y-[6rem]", className)}>
+    <div className={cn("flex flex-col gap-y-[12rem]", className)}>
       {offset && <div style={{ height: `${offset}rem` }} />}
       {children}
     </div>
@@ -30,8 +30,10 @@ export function Layout({
   return (
     <DraggableContainer>
       <div
-        className="grid gap-x-[5rem] px-12 py-6"
-        style={{ gridTemplateColumns: `repeat(${columns}, minmax(10vw, 1fr))` }}
+        className="grid gap-x-[12rem] px-12 py-6"
+        style={{
+          gridTemplateColumns: `repeat(${columns}, minmax(20vw, 1fr))`,
+        }}
       >
         {children}
       </div>

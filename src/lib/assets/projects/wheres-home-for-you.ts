@@ -1,4 +1,4 @@
-import { image, project } from "./utils";
+import { project } from "@/lib/utils";
 
 const name = "wheres-home-for-you";
 

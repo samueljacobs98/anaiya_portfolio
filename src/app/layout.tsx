@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Questrial } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/header";
+import { ScaleProvider } from "@/lib/state/context";
+import { ZoomControls } from "@/components/zoom-controls";
 
 const questrial = Questrial({
   variable: "--font-questrial",
@@ -27,8 +29,16 @@ export default function RootLayout({
           backgroundColor: "#F9F8EF",
         }}
       >
-        <Header />
-        {children}
+        <ScaleProvider
+          initialScale={0.5}
+          scaleStep={0.1}
+          scaleMin={0.3}
+          scaleMax={1}
+        >
+          <Header />
+          {children}
+          <ZoomControls />
+        </ScaleProvider>
       </body>
     </html>
   );

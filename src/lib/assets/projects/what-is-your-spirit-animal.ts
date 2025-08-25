@@ -1,4 +1,4 @@
-import { image, project } from "./utils";
+import { project } from "@/lib/utils";
 
 const name = "what-is-your-spirit-animal";
 
