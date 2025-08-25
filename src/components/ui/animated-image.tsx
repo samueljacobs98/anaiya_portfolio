@@ -1,9 +1,16 @@
 "use client";
 
-import * as React from "react";
 import Image, { type ImageProps } from "next/image";
 import { motion, useMotionValue, useTransform } from "motion/react";
 import { cn } from "@/lib/utils";
+import {
+  type ComponentRef,
+  forwardRef,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 
 interface AnimatedImageProps extends Omit<ImageProps, "className"> {
   className?: string;
@@ -25,10 +32,12 @@ interface AnimatedImageProps extends Omit<ImageProps, "className"> {
   intersectionAmount?: number | "some" | "all";
   /** Viewport root margin (default "50px") */
   rootMargin?: string;
+  /** Whether the image is a priority image (default false) */
+  priority?: boolean;
 }
 
-const AnimatedImage = React.forwardRef<
-  React.ElementRef<typeof motion.div>,
+const AnimatedImage = forwardRef<
+  ComponentRef<typeof motion.div>,
   AnimatedImageProps
 >(
   (
@@ -44,24 +53,21 @@ const AnimatedImage = React.forwardRef<
       intersectionAmount = 0.1,
       rootMargin = "50px",
       alt,
+      priority = false,
       ...props
     },
     ref
   ) => {
-    const containerRef = React.useRef<HTMLDivElement | null>(null);
+    const containerRef = useRef<HTMLDivElement | null>(null);
 
-    // Track image load (so we don't hand off proximity scaling until the real pixels are there)
-    const [isLoaded, setIsLoaded] = React.useState(false);
+    const [isLoaded, setIsLoaded] = useState(false);
 
-    // Has the entrance animation finished? (includes any delay)
-    const [hasEntered, setHasEntered] = React.useState(disableAnimation);
+    const [hasEntered, setHasEntered] = useState(disableAnimation);
 
-    // --- Proximity (0..1) -> scale ---
     const proximity = useMotionValue(0);
     const proximityScale = useTransform(proximity, [0, 1], [1, hoverScale]);
 
-    // Compute distance from pointer to the element's rect and update "proximity"
-    const updateProximity = React.useCallback(
+    const updateProximity = useCallback(
       (clientX: number, clientY: number) => {
         const el = containerRef.current;
         if (!el || disableHover || range <= 0) {
@@ -79,8 +85,7 @@ const AnimatedImage = React.forwardRef<
       [disableHover, range, proximity]
     );
 
-    // Global mouse tracking, but only after entrance has completed (and hover is enabled)
-    React.useEffect(() => {
+    useEffect(() => {
       if (disableHover || !hasEntered) {
         proximity.set(0);
         return;
@@ -114,7 +119,6 @@ const AnimatedImage = React.forwardRef<
       };
     }, [disableHover, hasEntered, updateProximity, proximity]);
 
-    // Entrance animation props (hidden until in-view; delay respected)
     const entranceProps = disableAnimation
       ? {}
       : {
@@ -133,7 +137,7 @@ const AnimatedImage = React.forwardRef<
             once: true,
             amount: intersectionAmount,
             margin: rootMargin,
-          } as const, // whileInView/viewport API
+          } as const,
           onAnimationComplete: () => setHasEntered(true),
         };
 
@@ -159,7 +163,6 @@ const AnimatedImage = React.forwardRef<
         )}
         style={{
           transformOrigin: "center center",
-          // Hand over scaling to proximity ONLY after entrance finished AND image loaded
           scale:
             hasEntered && isLoaded && !disableHover
               ? (proximityScale as unknown as number)
@@ -170,10 +173,11 @@ const AnimatedImage = React.forwardRef<
       >
         <Image
           {...props}
+          loading={priority ? "eager" : "lazy"}
+          priority={priority}
           alt={alt}
           draggable={false}
           onLoad={() => setIsLoaded(true)}
-          onLoadingComplete={() => setIsLoaded(true)}
           className={cn(
             "object-cover w-full h-full",
             dropShadow && [

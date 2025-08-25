@@ -9,6 +9,7 @@ export type Image = {
   side: "left" | "right" | "top" | "bottom";
   tags: Set<string>;
   dropShadow: boolean;
+  priority: boolean;
 };
 
 export type Project = {

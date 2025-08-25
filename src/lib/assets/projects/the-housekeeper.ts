@@ -23,10 +23,19 @@ export const theHousekeeper = project(name, [
       height: 1000,
     }
   ),
-  image("dollhouse", name, `/images/${name}/dollhouse.png`, "Dollhouse", {
-    width: 1000,
-    height: 1000,
-  }),
+  image(
+    "dollhouse",
+    name,
+    `/images/${name}/dollhouse.png`,
+    "Dollhouse",
+    {
+      width: 1000,
+      height: 1000,
+    },
+    {
+      priority: true,
+    }
+  ),
   image("grandpa", name, `/images/${name}/grandpa.png`, "Grandpa", {
     width: 1000,
     height: 1000,

@@ -2,8 +2,6 @@
 
 import { cn } from "@/lib/utils";
 import { DraggableContainer } from "./draggable-container";
-import { useScale } from "@/lib/state/context";
-import { motion } from "motion/react";
 
 export function Column({
   className,
@@ -15,7 +13,7 @@ export function Column({
   children: React.ReactNode;
 }) {
   return (
-    <div className={cn("flex flex-col gap-y-[6rem]", className)}>
+    <div className={cn("flex flex-col gap-y-[12rem]", className)}>
       {offset && <div style={{ height: `${offset}rem` }} />}
       {children}
     </div>
@@ -29,15 +27,12 @@ export function Layout({
   columns?: number;
   children: React.ReactNode;
 }) {
-  const { scale } = useScale();
-
   return (
     <DraggableContainer>
       <div
-        className="grid gap-x-[5rem] px-12 py-6"
+        className="grid gap-x-[12rem] px-12 py-6"
         style={{
           gridTemplateColumns: `repeat(${columns}, minmax(20vw, 1fr))`,
-          // transformOrigin: "center center",
         }}
       >
         {children}

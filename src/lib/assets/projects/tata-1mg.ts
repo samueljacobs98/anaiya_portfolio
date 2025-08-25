@@ -12,8 +12,9 @@ export const tata1mg = project(name, [
       width: 1000,
       height: 1000,
     },
-    "left",
-    true
+    {
+      dropShadow: true,
+    }
   ),
   image(
     "family",
@@ -24,8 +25,9 @@ export const tata1mg = project(name, [
       width: 1000,
       height: 1000,
     },
-    "left",
-    true
+    {
+      dropShadow: true,
+    }
   ),
   image(
     "girl with flower",
@@ -36,8 +38,9 @@ export const tata1mg = project(name, [
       width: 1000,
       height: 1000,
     },
-    "left",
-    true
+    {
+      dropShadow: true,
+    }
   ),
   image(
     "person dark green",
@@ -48,8 +51,9 @@ export const tata1mg = project(name, [
       width: 1000,
       height: 1000,
     },
-    "left",
-    true
+    {
+      dropShadow: true,
+    }
   ),
   image(
     "person light green",
@@ -59,6 +63,9 @@ export const tata1mg = project(name, [
     {
       width: 1000,
       height: 1000,
+    },
+    {
+      dropShadow: true,
     }
   ),
   image(
@@ -70,8 +77,9 @@ export const tata1mg = project(name, [
       width: 1000,
       height: 1000,
     },
-    "left",
-    true
+    {
+      dropShadow: true,
+    }
   ),
   image("person red", name, `/images/${name}/person-red.png`, "Person Red", {
     width: 1000,
@@ -86,8 +94,9 @@ export const tata1mg = project(name, [
       width: 1000,
       height: 1000,
     },
-    "left",
-    true
+    {
+      dropShadow: true,
+    }
   ),
   image(
     "person yellow",
@@ -98,7 +107,8 @@ export const tata1mg = project(name, [
       width: 1000,
       height: 1000,
     },
-    "left",
-    true
+    {
+      dropShadow: true,
+    }
   ),
 ]);
