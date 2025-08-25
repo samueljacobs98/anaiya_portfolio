@@ -22,7 +22,11 @@ export default async function Home() {
   return (
     <Layout columns={COLUMNS}>
       {gridItems.map((columnImages, index) => (
-        <Column key={index} images={columnImages} />
+        <Column
+          key={index}
+          images={columnImages}
+          offset={(index % 4) * 4 + 2}
+        />
       ))}
     </Layout>
   );

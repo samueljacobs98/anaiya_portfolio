@@ -17,7 +17,8 @@ function Item({ image, index }: { image: Image; index: number }) {
           width={image.width}
           height={image.height}
           dropShadow={image.dropShadow}
-          range={200}
+          hoverScale={1.25}
+          range={400}
           animationDelay={0.3 * (2 % index)}
           priority={image.priority}
         />
@@ -40,7 +41,7 @@ export function Column({
 }) {
   return (
     <div className={cn("flex flex-col gap-y-[12rem]", className)}>
-      {offset && <div style={{ height: `${offset}rem` }} />}
+      {offset && <div style={{ height: `${offset}rem` }}></div>}
       {images.map((image, index) => (
         <Item key={image.id} image={image} index={index} />
       ))}
