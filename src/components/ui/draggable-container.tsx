@@ -108,6 +108,10 @@ export function DraggableContainer({ children }: { children: ReactNode }) {
           drag
           dragConstraints={constraints}
           dragElastic={0}
+          dragTransition={{
+            power: 0.3,
+            timeConstant: 200,
+          }}
           initial={false}
           style={{
             position: "absolute",
