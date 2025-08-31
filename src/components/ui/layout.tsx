@@ -8,8 +8,9 @@ import { Image, type ImageObject } from "@/lib/domain/image";
 import { useQueryState } from "nuqs";
 import { ProjectSheet } from "../project-sheet";
 import { getProjectById } from "@/lib/assets/projects";
+import { Suspense } from "react";
 
-function Item({ image, index }: { image: Image; index: number }) {
+function ItemWithQueryState({ image, index }: { image: Image; index: number }) {
   const setProject = useQueryState("project")[1];
   const setDImage = useQueryState("d_image")[1];
 
@@ -50,6 +51,14 @@ function Item({ image, index }: { image: Image; index: number }) {
   );
 }
 
+function Item({ image, index }: { image: Image; index: number }) {
+  return (
+    <Suspense fallback={null}>
+      <ItemWithQueryState image={image} index={index} />
+    </Suspense>
+  );
+}
+
 export function Column({
   className,
   offset,
@@ -79,7 +88,9 @@ export function Layout({
 }) {
   return (
     <>
-      <ProjectSheet />
+      <Suspense fallback={null}>
+        <ProjectSheet />
+      </Suspense>
 
       <DraggableContainer>
         <div
