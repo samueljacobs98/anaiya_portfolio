@@ -1,4 +1,6 @@
 export class Image {
+  public readonly type = "image";
+
   constructor(
     public readonly id: string,
     public readonly projectId: string,

@@ -2,6 +2,7 @@ import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { Image } from "./domain/image";
 import { Project } from "./domain/project";
+import { Text } from "./domain/text";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -107,17 +108,15 @@ function getRandomImage(
   project: Project,
   imageIdsSet: Set<string>
 ): Image | null {
-  if (!project.images || project.images.length === 0) {
+  const images = project.getImages();
+  if (!images || images.length === 0) {
     return null;
   }
 
-  const availableImages = project.images.filter(
-    (img) => !imageIdsSet.has(img.id)
-  );
+  const availableImages = images.filter((img) => !imageIdsSet.has(img.id));
 
   if (availableImages.length === 0) {
-    const randomImage =
-      project.images[Math.floor(Math.random() * project.images.length)];
+    const randomImage = images[Math.floor(Math.random() * images.length)];
     return randomImage;
   }
 
@@ -126,6 +125,10 @@ function getRandomImage(
   imageIdsSet.add(randomImage.id);
   return randomImage;
 }
+
+export const text = (id: string, projectId: string, text: string): Text => {
+  return new Text(`text-${projectId}-${id}`, projectId, text);
+};
 
 export const image = (
   id: string,
@@ -149,7 +152,7 @@ export const image = (
   }
 ): Image => {
   return new Image(
-    id,
+    `image-${projectId}-${id}`,
     projectId,
     name,
     path,
@@ -165,13 +168,13 @@ export const image = (
 
 export const project = (
   name: string,
-  imagesFactory: (projectId: string) => Image[]
+  contentFactory: (projectId: string) => (Text | Image)[]
 ): Project => {
   const projectId = createProjectId(name);
   return new Project(
     projectId,
     name,
     new Set<string>(),
-    imagesFactory(projectId)
+    contentFactory(projectId)
   );
 };

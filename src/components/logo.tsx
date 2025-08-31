@@ -7,7 +7,7 @@ import { ElementType } from "react";
 export function Logo({ as: Component = "h1" }: { as?: ElementType }) {
   return (
     <Link href="/">
-      <Component className="lowercase font-bold text-4xl font-playful text-[#95d7ef] animate-in fade-in slide-in-from-top-8 duration-500 delay-800">
+      <Component className="lowercase font-bold text-4xl font-playful text-anaiya animate-in fade-in slide-in-from-top-8 duration-500 delay-800">
         <motion.span
           initial={{ opacity: 0, y: -32 }}
           animate={{ opacity: 1, y: 0 }}

@@ -11,7 +11,6 @@ import { theHousekeeper } from "./the-housekeeper";
 import { whatIsYourSpiritAnimal } from "./what-is-your-spirit-animal";
 import { whereCloudsMeet } from "./where-clouds-meet";
 import { wheresHomeForYou } from "./wheres-home-for-you";
-import { Image } from "@/lib/domain/image";
 
 export const projects = {
   indianGiftsPortal,
@@ -38,17 +37,4 @@ export const getProjectById = (id: string): Project | null => {
     return null;
   }
   return projectIdsMap.get(id)!;
-};
-
-const imagesMap = new Map<string, Image>(
-  Object.values(projects).flatMap((project) =>
-    project.images.map((image) => [image.id, image])
-  )
-);
-
-export const getImageById = (id: string): Image | null => {
-  if (!imagesMap.has(id)) {
-    return null;
-  }
-  return imagesMap.get(id)!;
 };
