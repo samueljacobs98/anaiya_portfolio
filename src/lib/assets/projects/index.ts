@@ -27,7 +27,7 @@ export const projects = {
   wheresHomeForYou,
 } as const;
 
-const projectIdsMap = Object.entries(projects).reduce((map, [_, project]) => {
+const projectIdsMap = Object.entries(projects).reduce((map, [, project]) => {
   map.set(project.id, project);
   return map;
 }, new Map<string, Project>());

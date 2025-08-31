@@ -1,8 +1,8 @@
 import { project } from "@/lib/utils";
 
-const path = "/images/where-clouds-meet";
+// const path = "/images/where-clouds-meet";
 
-export const whereCloudsMeet = project("Where Clouds Meet", (projectId) => [
+export const whereCloudsMeet = project("Where Clouds Meet", () => [
   //   image(
   //     "where-clouds-meet",
   //     `${path}/where-clouds-meet.jpg`,

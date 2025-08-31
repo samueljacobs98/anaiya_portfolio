@@ -35,7 +35,6 @@ export function ProjectSheet() {
 
 function Sheet({
   project,
-  defaultImage,
   resetQueryState,
 }: {
   project?: Project;
@@ -66,7 +65,7 @@ function Sheet({
               <SheetTitle className="sticky top-0 z-10 text-6xl font-bold font-playful text-anaiya bg-background py-4 w-full">
                 {project?.name.split("").map((char, index) => (
                   <motion.span
-                    key={index}
+                    key={`${project.id}-char-${index}`}
                     initial={{ opacity: 0, y: 32 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{
@@ -100,6 +99,7 @@ function Sheet({
                     </div>
                   ) : (
                     <Image
+                      key={content.id}
                       className="max-w-lg"
                       src={content.path}
                       alt={content.alt}
