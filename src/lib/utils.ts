@@ -1,9 +1,18 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
-import type { Image, Project } from "./types";
+import { Image } from "./domain/image";
+import { Project } from "./domain/project";
+import { Text } from "./domain/text";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
+}
+
+function createProjectId(name: string): string {
+  return name
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
 }
 
 export function generateGridItems(
@@ -99,17 +108,15 @@ function getRandomImage(
   project: Project,
   imageIdsSet: Set<string>
 ): Image | null {
-  if (!project.images || project.images.length === 0) {
+  const images = project.getImages();
+  if (!images || images.length === 0) {
     return null;
   }
 
-  const availableImages = project.images.filter(
-    (img) => !imageIdsSet.has(img.id)
-  );
+  const availableImages = images.filter((img) => !imageIdsSet.has(img.id));
 
   if (availableImages.length === 0) {
-    const randomImage =
-      project.images[Math.floor(Math.random() * project.images.length)];
+    const randomImage = images[Math.floor(Math.random() * images.length)];
     return randomImage;
   }
 
@@ -119,7 +126,12 @@ function getRandomImage(
   return randomImage;
 }
 
+export const text = (id: string, projectId: string, text: string): Text => {
+  return new Text(`text-${projectId}-${id}`, projectId, text);
+};
+
 export const image = (
+  id: string,
   name: string,
   projectId: string,
   path: string,
@@ -139,8 +151,8 @@ export const image = (
     priority: false,
   }
 ): Image => {
-  return {
-    id: `image-${name}`,
+  return new Image(
+    `image-${projectId}-${id}`,
     projectId,
     name,
     path,
@@ -148,17 +160,21 @@ export const image = (
     width,
     height,
     side,
-    tags: new Set<string>(),
+    new Set<string>(),
     dropShadow,
-    priority,
-  };
+    priority
+  );
 };
 
-export const project = (name: string, images: Image[] = []): Project => {
-  return {
-    id: `project-${name}`,
+export const project = (
+  name: string,
+  contentFactory: (projectId: string) => (Text | Image)[]
+): Project => {
+  const projectId = createProjectId(name);
+  return new Project(
+    projectId,
     name,
-    images,
-    tags: new Set<string>(),
-  };
+    new Set<string>(),
+    contentFactory(projectId)
+  );
 };

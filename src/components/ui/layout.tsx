@@ -4,43 +4,74 @@ import { cn } from "@/lib/utils";
 import { DraggableContainer } from "./draggable-container";
 import { AnimatedImage } from "./animated-image";
 import { Tooltip, TooltipContent, TooltipTrigger } from "./tooltip";
-import type { Image } from "@/lib/types";
+import { Image, type ImageObject } from "@/lib/domain/image";
+import { useQueryState } from "nuqs";
+import { ProjectSheet } from "../project-sheet";
+import { getProjectById } from "@/lib/assets/projects";
+import { Suspense } from "react";
+
+function ItemWithQueryState({ image, index }: { image: Image; index: number }) {
+  const setProject = useQueryState("project")[1];
+  const setDImage = useQueryState("d_image")[1];
+
+  const project = getProjectById(image.projectId)!;
+
+  const handleClick = () => {
+    setProject(image.projectId);
+    setDImage(image.id);
+    window.history.pushState(
+      {},
+      "",
+      `/?project=${image.projectId}&d_image=${image.id}`
+    );
+  };
+
+  return (
+    <Tooltip key={image.id}>
+      <TooltipTrigger asChild>
+        <button type="button" onClick={handleClick}>
+          <AnimatedImage
+            className="cursor-grab max-w-sm"
+            src={image.path}
+            alt={image.alt}
+            width={image.width}
+            height={image.height}
+            dropShadow={image.dropShadow}
+            hoverScale={1.25}
+            range={400}
+            animationDelay={0.3 * (2 % index)}
+            priority={image.priority}
+          />
+        </button>
+      </TooltipTrigger>
+      <TooltipContent sideOffset={10}>
+        <p>{project.name}</p>
+      </TooltipContent>
+    </Tooltip>
+  );
+}
 
 function Item({ image, index }: { image: Image; index: number }) {
   return (
-    <Tooltip key={image.id}>
-      <TooltipTrigger>
-        <AnimatedImage
-          className="cursor-grab max-w-sm"
-          src={image.path}
-          alt={image.alt}
-          width={image.width}
-          height={image.height}
-          dropShadow={image.dropShadow}
-          range={200}
-          animationDelay={0.3 * (2 % index)}
-          priority={image.priority}
-        />
-      </TooltipTrigger>
-      <TooltipContent sideOffset={10}>
-        <p>{image.projectId}</p>
-      </TooltipContent>
-    </Tooltip>
+    <Suspense fallback={null}>
+      <ItemWithQueryState image={image} index={index} />
+    </Suspense>
   );
 }
 
 export function Column({
   className,
   offset,
-  images,
+  images: imageObjects,
 }: {
   className?: string;
   offset?: number;
-  images: Image[];
+  images: ImageObject[];
 }) {
+  const images = imageObjects.map((image) => Image.fromObject(image));
   return (
     <div className={cn("flex flex-col gap-y-[12rem]", className)}>
-      {offset && <div style={{ height: `${offset}rem` }} />}
+      {offset && <div style={{ height: `${offset}rem` }}></div>}
       {images.map((image, index) => (
         <Item key={image.id} image={image} index={index} />
       ))}
@@ -56,15 +87,21 @@ export function Layout({
   children: React.ReactNode;
 }) {
   return (
-    <DraggableContainer>
-      <div
-        className="grid gap-x-[12rem] px-12 py-6"
-        style={{
-          gridTemplateColumns: `repeat(${columns}, minmax(20vw, 1fr))`,
-        }}
-      >
-        {children}
-      </div>
-    </DraggableContainer>
+    <>
+      <Suspense fallback={null}>
+        <ProjectSheet />
+      </Suspense>
+
+      <DraggableContainer>
+        <div
+          className="grid gap-x-[12rem] px-12 py-6"
+          style={{
+            gridTemplateColumns: `repeat(${columns}, minmax(20vw, 1fr))`,
+          }}
+        >
+          {children}
+        </div>
+      </DraggableContainer>
+    </>
   );
 }

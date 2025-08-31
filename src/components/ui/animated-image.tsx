@@ -28,6 +28,8 @@ interface AnimatedImageProps extends Omit<ImageProps, "className"> {
   hoverScale?: number;
   /** Pixel distance around the image within which scaling ramps up (default 100) */
   range?: number;
+  /** Exponential factor for scaling curve (default 2) */
+  exponentialFactor?: number;
   /** Viewport intersection threshold: 0..1 or "some"/"all" (default 0.1) */
   intersectionAmount?: number | "some" | "all";
   /** Viewport root margin (default "50px") */
@@ -50,6 +52,7 @@ const AnimatedImage = forwardRef<
       dropShadow = false,
       hoverScale = 1.08,
       range = 100,
+      exponentialFactor = 2,
       intersectionAmount = 0.1,
       rootMargin = "50px",
       alt,
@@ -62,10 +65,11 @@ const AnimatedImage = forwardRef<
 
     const [isLoaded, setIsLoaded] = useState(false);
 
-    const [hasEntered, setHasEntered] = useState(disableAnimation);
-
     const proximity = useMotionValue(0);
-    const proximityScale = useTransform(proximity, [0, 1], [1, hoverScale]);
+    const proximityScale = useTransform(proximity, (value) => {
+      const exponentialValue = Math.pow(value, exponentialFactor);
+      return 1 + (hoverScale - 1) * exponentialValue;
+    });
 
     const updateProximity = useCallback(
       (clientX: number, clientY: number) => {
@@ -76,9 +80,13 @@ const AnimatedImage = forwardRef<
         }
 
         const rect = el.getBoundingClientRect();
-        const dx = Math.max(rect.left - clientX, 0, clientX - rect.right);
-        const dy = Math.max(rect.top - clientY, 0, clientY - rect.bottom);
+
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
+        const dx = clientX - centerX;
+        const dy = clientY - centerY;
         const distance = Math.hypot(dx, dy);
+
         const p = Math.max(0, Math.min(1, 1 - distance / range));
         proximity.set(p);
       },
@@ -86,7 +94,7 @@ const AnimatedImage = forwardRef<
     );
 
     useEffect(() => {
-      if (disableHover || !hasEntered) {
+      if (disableHover) {
         proximity.set(0);
         return;
       }
@@ -117,7 +125,7 @@ const AnimatedImage = forwardRef<
         window.removeEventListener("mouseleave", onLeaveWindow);
         if (raf) cancelAnimationFrame(raf);
       };
-    }, [disableHover, hasEntered, updateProximity, proximity]);
+    }, [disableHover, updateProximity, proximity]);
 
     const entranceProps = disableAnimation
       ? {}
@@ -129,7 +137,7 @@ const AnimatedImage = forwardRef<
             visibility: "visible" as const,
             transition: {
               duration: animationDuration,
-              delay: animationDelay, // 👈 delay before entrance starts
+              delay: animationDelay,
               scale: { times: [0, 1], ease: [0.25, 0.46, 0.45, 0.94] },
             },
           },
@@ -138,7 +146,6 @@ const AnimatedImage = forwardRef<
             amount: intersectionAmount,
             margin: rootMargin,
           } as const,
-          onAnimationComplete: () => setHasEntered(true),
         };
 
     return (
@@ -163,10 +170,7 @@ const AnimatedImage = forwardRef<
         )}
         style={{
           transformOrigin: "center center",
-          scale:
-            hasEntered && isLoaded && !disableHover
-              ? (proximityScale as unknown as number)
-              : undefined,
+          scale: isLoaded && !disableHover ? proximityScale : undefined,
           isolation: "isolate",
         }}
         {...entranceProps}

@@ -1,9 +1,9 @@
 import { image, project } from "@/lib/utils";
 
-const name = "niyo";
+const path = "/images/niyo";
 
-export const niyo = project(name, [
-  image("niyo", name, `/images/${name}/niyo.png`, "Niyo", {
+export const niyo = project("Niyo", (projectId) => [
+  image("niyo", "Niyo", projectId, `${path}/niyo.png`, "Niyo", {
     width: 1000,
     height: 1000,
   }),

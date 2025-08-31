@@ -1,3 +1,4 @@
+import { Project } from "@/lib/domain/project";
 import { indianGiftsPortal } from "./indian-gifts-portal";
 import { loveIsAPathOfLeastResistance } from "./love-is-a-path-of-least-resistance";
 import { niyo } from "./niyo";
@@ -25,3 +26,15 @@ export const projects = {
   whereCloudsMeet,
   wheresHomeForYou,
 } as const;
+
+const projectIdsMap = Object.entries(projects).reduce((map, [, project]) => {
+  map.set(project.id, project);
+  return map;
+}, new Map<string, Project>());
+
+export const getProjectById = (id: string): Project | null => {
+  if (!projectIdsMap.has(id)) {
+    return null;
+  }
+  return projectIdsMap.get(id)!;
+};

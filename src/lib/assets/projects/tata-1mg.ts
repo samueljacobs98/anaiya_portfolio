@@ -1,12 +1,13 @@
 import { image, project } from "@/lib/utils";
 
-const name = "tata-1mg";
+const path = "/images/tata-1mg";
 
-export const tata1mg = project(name, [
+export const tata1mg = project("Tata 1mg", (projectId) => [
   image(
     "biology",
-    name,
-    `/images/${name}/biology.png`,
+    "Biology",
+    projectId,
+    `${path}/biology.png`,
     "Biology",
     {
       width: 1000,
@@ -18,8 +19,9 @@ export const tata1mg = project(name, [
   ),
   image(
     "family",
-    name,
-    `/images/${name}/family.png`,
+    "Family",
+    projectId,
+    `${path}/family.png`,
     "Family",
     {
       width: 1000,
@@ -31,8 +33,9 @@ export const tata1mg = project(name, [
   ),
   image(
     "girl with flower",
-    name,
-    `/images/${name}/girl-with-flower.png`,
+    "Girl with Flower",
+    projectId,
+    `${path}/girl-with-flower.png`,
     "Girl with Flower",
     {
       width: 1000,
@@ -44,8 +47,9 @@ export const tata1mg = project(name, [
   ),
   image(
     "person dark green",
-    name,
-    `/images/${name}/person-dark-green.png`,
+    "Person Dark Green",
+    projectId,
+    `${path}/person-dark-green.png`,
     "Person Dark Green",
     {
       width: 1000,
@@ -57,8 +61,9 @@ export const tata1mg = project(name, [
   ),
   image(
     "person light green",
-    name,
-    `/images/${name}/person-light-green.png`,
+    "Person Light Green",
+    projectId,
+    `${path}/person-light-green.png`,
     "Person Light Green",
     {
       width: 1000,
@@ -70,8 +75,9 @@ export const tata1mg = project(name, [
   ),
   image(
     "person pink",
-    name,
-    `/images/${name}/person-pink.png`,
+    "Person Pink",
+    projectId,
+    `${path}/person-pink.png`,
     "Person Pink",
     {
       width: 1000,
@@ -83,8 +89,9 @@ export const tata1mg = project(name, [
   ),
   image(
     "person red",
-    name,
-    `/images/${name}/person-red.png`,
+    "Person Red",
+    projectId,
+    `${path}/person-red.png`,
     "Person Red",
     {
       width: 1000,
@@ -96,8 +103,9 @@ export const tata1mg = project(name, [
   ),
   image(
     "person turquoise",
-    name,
-    `/images/${name}/person-turquoise.png`,
+    "Person Turquoise",
+    projectId,
+    `${path}/person-turquoise.png`,
     "Person Turquoise",
     {
       width: 1000,
@@ -109,8 +117,9 @@ export const tata1mg = project(name, [
   ),
   image(
     "person yellow",
-    name,
-    `/images/${name}/person-yellow.png`,
+    "Person Yellow",
+    projectId,
+    `${path}/person-yellow.png`,
     "Person Yellow",
     {
       width: 1000,

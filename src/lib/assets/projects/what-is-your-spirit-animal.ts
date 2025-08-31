@@ -1,15 +1,18 @@
 import { project } from "@/lib/utils";
 
-const name = "what-is-your-spirit-animal";
+// const path = "what-is-your-spirit-animal";
 
-export const whatIsYourSpiritAnimal = project(name, [
-  //   image(
-  //     "what-is-your-spirit-animal",
-  //     `/images/${name}/what-is-your-spirit-animal.png`,
-  //     "What is Your Spirit Animal",
-  //     {
-  //       width: 1000,
-  //       height: 1000,
-  //     }
-  //   ),
-]);
+export const whatIsYourSpiritAnimal = project(
+  "What is Your Spirit Animal",
+  () => [
+    //   image(
+    //     "what-is-your-spirit-animal",
+    //     `/images/${name}/what-is-your-spirit-animal.png`,
+    //     "What is Your Spirit Animal",
+    //     {
+    //       width: 1000,
+    //       height: 1000,
+    //     }
+    //   ),
+  ]
+);
